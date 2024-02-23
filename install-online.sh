@@ -43,6 +43,8 @@ if [[ -n "$FLDK_INSTALL_EXT_DESTINATION" ]]; then
     "$FLDK_INSTALL_EXT_DESTINATION" --install-extension "$HOME/wpilib/2024/vsCodeExtensions/vscode-wpilib-${wpilib_version}.vsix"
 fi
 
+echo "WPILib ${wpilib_version} has been successfully installed!"
+
 mkdir -p ~/Applications && cd ~/Applications || echo "Warning: Could not create and move to ~/Applications"
 applications_dir="$(pwd)"
 
@@ -57,3 +59,7 @@ cat <<EOF >~/.local/bin/open-ds || (echo "Error: Could not write to ~/.local/bin
 #!/bin/bash
 ~/wpilib/2024/jdk/bin/java -jar $applications_dir/open-ds-v${open_ds_version}.jar
 EOF
+
+chmod +x ~/.local/bin/open-ds
+
+echo "open-ds ${open_ds_version} has been successfully installed and can be used with the command \`open-ds\`!"
