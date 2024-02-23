@@ -48,11 +48,13 @@ echo "WPILib ${wpilib_version} has been successfully installed!"
 mkdir -p ~/Applications && cd ~/Applications || echo "Warning: Could not create and move to ~/Applications"
 applications_dir="$(pwd)"
 
-echo "Downloading open-ds..."
+echo "Downloading OpenDS..."
 open_ds_version=0.2.4
 open_ds_download=https://github.com/Boomaa23/open-ds/releases/download/v${open_ds_version}/open-ds-v${open_ds_version}.jar
+open_ds_icon=https://raw.githubusercontent.com/Boomaa23/open-ds/master/src/main/resources/icon.png
 
 wget $open_ds_download || exit 1
+wget --output-document ~/.local/share/icons/hicolor/128x128/apps/open-ds.png $open_ds_icon
 mkdir -p ~/.local/bin
 
 cat <<EOF >~/.local/bin/open-ds || (echo "Error: Could not write to ~/.local/bin/open-ds"; exit 1)
@@ -62,4 +64,21 @@ EOF
 
 chmod +x ~/.local/bin/open-ds
 
-echo "open-ds ${open_ds_version} has been successfully installed and can be used with the command \`open-ds\`!"
+cat <<EOF >~/.local/share/applications/open-ds.desktop
+[Desktop Entry]
+Comment=2024 FRC Driver Station (unofficial)
+Exec=open-ds
+GenericName=2024 FRC Driver Station (unofficial)
+Icon=open-ds
+Name=OpenDS
+NoDisplay=false
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-KDE-SubstituteUID=false
+X-KDE-Username=
+EOF
+
+echo "OpenDS ${open_ds_version} has been successfully installed and can be used with the command \`open-ds\`!"
