@@ -5,7 +5,7 @@ sudo apt install wget curl
 mkdir -p ~/Downloads/FRCLinuxDevKit && cd ~/Downloads/FRCLinuxDevKit || echo "Warning: Could not create and move to ~/Downloads/FRCLinuxDevKit"
 
 arch=$(uname -m)
-wpilib_version=2024.3.1
+wpilib_version=2024.3.2
 
 case $arch in
     x86_64)
