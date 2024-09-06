@@ -1,19 +1,19 @@
 # FRC Linux Development Kit
 
-This script will install all the necessary software to connect to the roboRIO from Linux.
+This script will install all the necessary software to connect to the roboRIO from Linux or macOS.
 
 ## Usage
 
 To run the script, you must have a display (X11 or Wayland) and a network connection.
 
 ```bash
-curl -o- -L https://raw.githubusercontent.com/ethanc8/FRCLinuxDevKit/master/install-online.sh | bash
+curl -o- -L https://raw.githubusercontent.com/ethanc8/FRCLinuxDevKit/macos/install-online.sh | bash
 ```
 
 If you also want to install the WPILib extension into your main VSCode or VSCodium installation, please set the environment variable FLDK_INSTALL_EXT_DESTINATION to the name of the command that launches VSCode (which is `code` for Microsoft binaries, `code-oss` if you compiled it yourself, and `codium` for VSCodium). For example:
 
 ```bash
-curl -o- -L https://raw.githubusercontent.com/ethanc8/FRCLinuxDevKit/master/install-online.sh | FLDK_INSTALL_EXT_DESTINATION=code bash
+curl -o- -L https://raw.githubusercontent.com/ethanc8/FRCLinuxDevKit/macos/install-online.sh | FLDK_INSTALL_EXT_DESTINATION=code bash
 ```
 
 ## Wiring to the roboRIO
