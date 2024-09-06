@@ -50,11 +50,24 @@ EOF
 
 echo "Downloading WPILib..."
 curl -OL "$wpilib_download" || exit 1
-tar xzf "$wpilib_filename" || exit 1
-
+case "$OSTYPE" in
+    darwin*)
+        hdiutil attach "$wpilib_filename" || exit 1
+    ;;
+    linux*)
+        tar xzf "$wpilib_filename" || exit 1
+    ;;
+esac
 echo "Please install WPILib."
 
-./WPILibInstaller
+case "$OSTYPE" in
+    darwin*)
+        open /Volumes/WPILibInstaller/WPILibInstaller.app
+    ;;
+    linux*)
+        ./WPILibInstaller
+    ;;
+esac
 
 if [[ -n "$FLDK_INSTALL_EXT_DESTINATION" ]]; then
     echo "Installing wpilib-${wpilib_version} extension into your $FLDK_INSTALL_EXT_DESTINATION installation..."
@@ -63,6 +76,14 @@ fi
 
 echo "WPILib ${wpilib_version} has been successfully installed!"
 
+case "$OSTYPE" in
+    darwin*)
+        # The bundle was made by Platypus.
+        curl https://github.com/ethanc8/FRCLinuxDevKit/raw/macos/OpenDS.zip -OL
+        unzip OpenDS.zip
+        mv OpenDS.app ~/Applications
+    ;;
+    linux*)
 mkdir -p ~/Applications && cd ~/Applications || echo "Warning: Could not create and move to ~/Applications"
 applications_dir="$(pwd)"
 
@@ -100,3 +121,5 @@ X-KDE-Username=
 EOF
 
 echo "OpenDS ${open_ds_version} has been successfully installed and can be used with the command \`open-ds\`!"
+    ;;
+esac
