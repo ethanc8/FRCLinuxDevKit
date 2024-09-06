@@ -1,26 +1,44 @@
 #!/bin/bash
 
-sudo apt install wget curl
+# Try installing wget and curl
+(apt --help > /dev/null && sudo apt install wget curl) || true
 
 mkdir -p ~/Downloads/FRCLinuxDevKit && cd ~/Downloads/FRCLinuxDevKit || echo "Warning: Could not create and move to ~/Downloads/FRCLinuxDevKit"
 
+# uname -m is the architecture of the OS, uname -p is the architecture of the CPU.
 arch=$(uname -m)
-wpilib_version=2024.3.1
+wpilib_version=2024.3.2
 
-case $arch in
-    x86_64)
-        wpilib_download=https://packages.wpilib.workers.dev/installer/v${wpilib_version}/Linux/WPILib_Linux-${wpilib_version}.tar.gz
-        wpilib_filename=WPILib_Linux-${wpilib_version}.tar.gz
-        ;;
-    aarch64)
-        wpilib_download=https://packages.wpilib.workers.dev/installer/v${wpilib_version}/LinuxArm64/WPILib_LinuxArm64-${wpilib_version}.tar.gz
-        wpilib_filename=WPILib_LinuxArm64-${wpilib_version}.tar.gz
-        ;;
-    default)
-        echo "Your architecture, \"$arch\", was not known. Downloading the x86 version..."
-        wpilib_download=https://packages.wpilib.workers.dev/installer/v${wpilib_version}/Linux/WPILib_Linux-${wpilib_version}.tar.gz
-        wpilib_filename=WPILib_Linux-${wpilib_version}.tar.gz
-        ;;
+case "$OSTYPE" in
+    darwin*)
+        case $arch in
+            x86_64)
+                wpilib_download=https://packages.wpilib.workers.dev/installer/v${wpilib_version}/macOS/WPILib_macOS-Intel-${wpilib_version}.dmg
+                wpilib_filename=WPILib_Linux-${wpilib_version}.dmg
+                ;;
+            arm64)
+                wpilib_download=https://packages.wpilib.workers.dev/installer/v${wpilib_version}/macOSArm/WPILib_macOS-Arm64-${wpilib_version}.dmg
+                wpilib_filename=WPILib_macOS-Arm64-${wpilib_version}.dmg
+                ;;
+        esac
+    ;;
+    linux*)   
+        case $arch in
+            x86_64)
+                wpilib_download=https://packages.wpilib.workers.dev/installer/v${wpilib_version}/Linux/WPILib_Linux-${wpilib_version}.tar.gz
+                wpilib_filename=WPILib_Linux-${wpilib_version}.tar.gz
+                ;;
+            aarch64)
+                wpilib_download=https://packages.wpilib.workers.dev/installer/v${wpilib_version}/LinuxArm64/WPILib_LinuxArm64-${wpilib_version}.tar.gz
+                wpilib_filename=WPILib_LinuxArm64-${wpilib_version}.tar.gz
+                ;;
+            default)
+                echo "Your architecture, \"$arch\", was not known. Downloading the x86 version..."
+                wpilib_download=https://packages.wpilib.workers.dev/installer/v${wpilib_version}/Linux/WPILib_Linux-${wpilib_version}.tar.gz
+                wpilib_filename=WPILib_Linux-${wpilib_version}.tar.gz
+                ;;
+        esac
+    ;;
 esac
 
 cat <<EOF >~/.profile
@@ -31,10 +49,10 @@ fi
 EOF
 
 echo "Downloading WPILib..."
-wget "$wpilib_download" || exit 1
+curl -OL "$wpilib_download" || exit 1
 tar xzf "$wpilib_filename" || exit 1
 
-echo "Please install WPILib. It's your choice whether to install the WPILib VS Code, but we recommend that you do not."
+echo "Please install WPILib."
 
 ./WPILibInstaller
 
@@ -53,8 +71,8 @@ open_ds_version=0.2.4
 open_ds_download=https://github.com/Boomaa23/open-ds/releases/download/v${open_ds_version}/open-ds-v${open_ds_version}.jar
 open_ds_icon=https://raw.githubusercontent.com/Boomaa23/open-ds/master/src/main/resources/icon.png
 
-wget $open_ds_download || exit 1
-wget --output-document ~/.local/share/icons/hicolor/128x128/apps/open-ds.png $open_ds_icon
+curl -OL $open_ds_download || exit 1
+curl -L $open_ds_icon --output ~/.local/share/icons/hicolor/128x128/apps/open-ds.png
 mkdir -p ~/.local/bin
 
 cat <<EOF >~/.local/bin/open-ds || (echo "Error: Could not write to ~/.local/bin/open-ds"; exit 1)
