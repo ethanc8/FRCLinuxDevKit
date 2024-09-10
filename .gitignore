@@ -1,3 +1,4 @@
 ignored
 **.app
 **.jar
+.DS_Store
