@@ -16,6 +16,12 @@ If you also want to install the WPILib extension into your main VSCode or VSCodi
 curl -o- -L https://raw.githubusercontent.com/ethanc8/FRCLinuxDevKit/macos/install-online.sh | FLDK_INSTALL_EXT_DESTINATION=code bash
 ```
 
+If you don't want to install WPILib, or already did install WPILib, do:
+
+```bash
+curl -o- -L https://raw.githubusercontent.com/ethanc8/FRCLinuxDevKit/macos/install-online.sh | FLDK_INSTALL_WPILIB=0 bash
+```
+
 ## Wiring to the roboRIO
 
 1. Connect power to the roboRIO

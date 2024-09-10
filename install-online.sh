@@ -9,6 +9,7 @@ mkdir -p ~/Downloads/FRCLinuxDevKit && cd ~/Downloads/FRCLinuxDevKit || echo "Wa
 arch=$(uname -m)
 wpilib_version=2024.3.2
 
+if [[ "$FLDK_INSTALL_WPILIB" != 0 ]]; then
 case "$OSTYPE" in
     darwin*)
         case $arch in
@@ -41,13 +42,6 @@ case "$OSTYPE" in
     ;;
 esac
 
-cat <<EOF >~/.profile
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-EOF
-
 echo "Downloading WPILib..."
 curl -OL "$wpilib_download" || exit 1
 case "$OSTYPE" in
@@ -76,14 +70,59 @@ fi
 
 echo "WPILib ${wpilib_version} has been successfully installed!"
 
+else
+echo "WPILib was not installed."
+fi # FLDK_INSTALL_WPILIB
+
 case "$OSTYPE" in
     darwin*)
-        # The bundle was made by Platypus.
-        curl https://github.com/ethanc8/FRCLinuxDevKit/raw/macos/OpenDS.zip -OL
-        unzip OpenDS.zip
-        mv OpenDS.app ~/Applications
+
+# The bundle was made by Platypus.
+rm OpenDS.zip
+rm -r ~/Applications/OpenDS.app
+curl https://github.com/ethanc8/FRCLinuxDevKit/raw/macos/OpenDS.zip -OL
+unzip OpenDS.zip
+mv OpenDS.app ~/Applications
+
+cat << EOF >> ~/.bash_profile
+# Add ~/.local/bin to the PATH
+export PATH="$HOME/.local/bin:\$PATH"
+EOF
+
+cat << EOF >> ~/.zprofile
+# Add ~/.local/bin to the PATH
+export PATH="$HOME/.local/bin:\$PATH"
+EOF
+
+cat <<EOF >~/.local/bin/frccode2024
+#!/bin/bash
+APP_PATH="\$HOME/wpilib/2024/vscode/Visual Studio Code.app"
+CONTENTS="\$APP_PATH/Contents"
+ELECTRON="\$CONTENTS/MacOS/Electron"
+CLI="\$CONTENTS/Resources/app/out/cli.js"
+ELECTRON_RUN_AS_NODE=1 "\$ELECTRON" "\$CLI" --ms-enable-electron-run-as-node "\$@"
+exit \$?
+EOF
+
+chmod +x ~/.local/bin/frccode2024
+
+cat <<EOF >~/.local/bin/open-ds || (echo "Error: Could not write to ~/.local/bin/open-ds"; exit 1)
+#!/bin/bash
+open ~/Applications/OpenDS.app
+EOF
+
+chmod +x ~/.local/bin/open-ds
+
     ;;
     linux*)
+
+cat <<EOF >~/.profile
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+EOF
+
 mkdir -p ~/Applications && cd ~/Applications || echo "Warning: Could not create and move to ~/Applications"
 applications_dir="$(pwd)"
 
