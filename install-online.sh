@@ -10,16 +10,16 @@ wpilib_version=2024.3.2
 case $arch in
     x86_64)
         wpilib_download=https://packages.wpilib.workers.dev/installer/v${wpilib_version}/Linux/WPILib_Linux-${wpilib_version}.tar.gz
-        wpilib_filename=WPILib_Linux-${wpilib_version}.tar.gz
+        wpilib_filename=WPILib_Linux-${wpilib_version}
         ;;
     aarch64)
         wpilib_download=https://packages.wpilib.workers.dev/installer/v${wpilib_version}/LinuxArm64/WPILib_LinuxArm64-${wpilib_version}.tar.gz
-        wpilib_filename=WPILib_LinuxArm64-${wpilib_version}.tar.gz
+        wpilib_filename=WPILib_LinuxArm64-${wpilib_version}
         ;;
     default)
         echo "Your architecture, \"$arch\", was not known. Downloading the x86 version..."
         wpilib_download=https://packages.wpilib.workers.dev/installer/v${wpilib_version}/Linux/WPILib_Linux-${wpilib_version}.tar.gz
-        wpilib_filename=WPILib_Linux-${wpilib_version}.tar.gz
+        wpilib_filename=WPILib_Linux-${wpilib_version}
         ;;
 esac
 
@@ -32,11 +32,11 @@ EOF
 
 echo "Downloading WPILib..."
 wget "$wpilib_download" || exit 1
-tar xzf "$wpilib_filename" || exit 1
+tar xzf "$wpilib_filename.tar.gz" || exit 1
 
 echo "Please install WPILib. It's your choice whether to install the WPILib VS Code, but we recommend that you do not."
 
-./WPILibInstaller
+"$wpilib_filename/WPILibInstaller"
 
 if [[ -n "$FLDK_INSTALL_EXT_DESTINATION" ]]; then
     echo "Installing wpilib-${wpilib_version} extension into your $FLDK_INSTALL_EXT_DESTINATION installation..."
