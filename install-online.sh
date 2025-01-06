@@ -68,11 +68,6 @@ case "$OSTYPE" in
     ;;
 esac
 
-if [[ -n "$FLDK_INSTALL_EXT_DESTINATION" ]]; then
-    echo "Installing wpilib-${wpilib_version} extension into your $FLDK_INSTALL_EXT_DESTINATION installation..."
-    "$FLDK_INSTALL_EXT_DESTINATION" --install-extension "$HOME/wpilib/2025/vsCodeExtensions/vscode-wpilib-${wpilib_version}.vsix"
-fi
-
 case "$OSTYPE" in
     darwin*)
         cat <<EOF >~/.local/bin/frccode2025
@@ -117,6 +112,15 @@ export PATH="$HOME/.local/bin:\$PATH"
 EOF
     ;;
 esac
+
+################################################
+##### WPILib VSCode extension installation #####
+################################################
+
+if [[ -n "$FLDK_INSTALL_EXT_DESTINATION" ]]; then
+    echo "Installing wpilib-${wpilib_version} extension into your $FLDK_INSTALL_EXT_DESTINATION installation..."
+    "$FLDK_INSTALL_EXT_DESTINATION" --install-extension "$HOME/wpilib/2025/vsCodeExtensions/vscode-wpilib-${wpilib_version}.vsix"
+fi
 
 ###############################
 ##### OpenDS installation #####

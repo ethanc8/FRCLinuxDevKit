@@ -1,6 +1,14 @@
 # FRC Linux Development Kit
 
-This script will install all the necessary software to connect to the roboRIO from Linux or macOS.
+This script will install all the necessary software to connect to the roboRIO from Linux or macOS. Currently, this includes:
+
+* WPILib
+* WPILib VSCode extension installation in existing IDE
+* OpenDS (open-source driver station)
+
+Additionally, it also installs these useful FRC tools:
+
+* PathPlanner
 
 ## Usage
 
@@ -16,11 +24,12 @@ If you also want to install the WPILib extension into your main VSCode or VSCodi
 curl -o- -L https://raw.githubusercontent.com/ethanc8/FRCLinuxDevKit/macos/install-online.sh | FLDK_INSTALL_EXT_DESTINATION=code bash
 ```
 
-If you don't want to install WPILib, or already did install WPILib, do:
+### Parameters
 
-```bash
-curl -o- -L https://raw.githubusercontent.com/ethanc8/FRCLinuxDevKit/macos/install-online.sh | FLDK_INSTALL_WPILIB=0 bash
-```
+* `FLDK_INSTALL_WPILIB`: Whether or not to install WPILib (default true)
+* `FLDK_INSTALL_EXT_DESTINATION`: command that launches VSCode or VSCode derivative to install WPILib extension into (default: don't install the WPILib extension)
+* `FLDK_INSTALL_OPENDS`: Whether or not to install OpenDS (default true)
+* `FLDK_INSTALL_PATHPLANNER`: Whether or not to install PathPlanner (default true)
 
 ## Wiring to the roboRIO
 
