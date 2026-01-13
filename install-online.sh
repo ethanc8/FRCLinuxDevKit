@@ -1,13 +1,10 @@
 #!/bin/bash
 
-# Try installing wget and curl
-(apt --help 2>&1 > /dev/null && sudo apt install wget curl) || true
-
 mkdir -p ~/Downloads/FRCLinuxDevKit && cd ~/Downloads/FRCLinuxDevKit || echo "Warning: Could not create and move to ~/Downloads/FRCLinuxDevKit"
 
 # uname -m is the architecture of the OS, uname -p is the architecture of the CPU.
 arch=$(uname -m)
-wpilib_version=2025.3.1
+wpilib_version=2026.1.1
 
 ###############################
 ##### WPILib installation #####
@@ -70,16 +67,16 @@ esac
 
 case "$OSTYPE" in
     darwin*)
-        cat <<EOF >~/.local/bin/frccode2025
+        cat <<EOF >~/.local/bin/frccode2026
 #!/bin/bash
-APP_PATH="\$HOME/wpilib/2025/vscode/Visual Studio Code.app"
+APP_PATH="\$HOME/wpilib/2026/vscode/Visual Studio Code.app"
 CONTENTS="\$APP_PATH/Contents"
 ELECTRON="\$CONTENTS/MacOS/Electron"
 CLI="\$CONTENTS/Resources/app/out/cli.js"
 ELECTRON_RUN_AS_NODE=1 "\$ELECTRON" "\$CLI" --ms-enable-electron-run-as-node "\$@"
 exit \$?
 EOF
-        chmod +x ~/.local/bin/frccode2025
+        chmod +x ~/.local/bin/frccode2026
     ;;
 esac
 
@@ -119,7 +116,7 @@ esac
 
 if [[ -n "$FLDK_INSTALL_EXT_DESTINATION" ]]; then
     echo "Installing wpilib-${wpilib_version} extension into your $FLDK_INSTALL_EXT_DESTINATION installation..."
-    "$FLDK_INSTALL_EXT_DESTINATION" --install-extension "$HOME/wpilib/2025/vsCodeExtensions/vscode-wpilib-${wpilib_version}.vsix"
+    "$FLDK_INSTALL_EXT_DESTINATION" --install-extension "$HOME/wpilib/2026/vsCodeExtensions/vscode-wpilib-${wpilib_version}.vsix"
 fi
 
 ###############################
@@ -138,7 +135,7 @@ unzip OpenDS.zip
 mv OpenDS.app ~/Applications
 
 
-chmod +x ~/.local/bin/frccode2025
+chmod +x ~/.local/bin/frccode2026
 
 cat <<EOF >~/.local/bin/open-ds || (echo "Error: Could not write to ~/.local/bin/open-ds"; exit 1)
 #!/bin/bash
@@ -164,16 +161,16 @@ mkdir -p ~/.local/bin
 
 cat <<EOF >~/.local/bin/open-ds || (echo "Error: Could not write to ~/.local/bin/open-ds"; exit 1)
 #!/bin/bash
-~/wpilib/2025/jdk/bin/java -jar $applications_dir/open-ds-v${open_ds_version}.jar
+~/wpilib/2026/jdk/bin/java -jar $applications_dir/open-ds-v${open_ds_version}.jar
 EOF
 
 chmod +x ~/.local/bin/open-ds
 
 cat <<EOF >~/.local/share/applications/open-ds.desktop
 [Desktop Entry]
-Comment=2025 FRC Driver Station (unofficial)
+Comment=2026 FRC Driver Station (unofficial)
 Exec=open-ds
-GenericName=2025 FRC Driver Station (unofficial)
+GenericName=2026 FRC Driver Station (unofficial)
 Icon=open-ds
 Name=OpenDS
 NoDisplay=false
@@ -198,7 +195,7 @@ fi # FLDK_INSTALL_OPENDS
 ##### PathPlanner installation #####
 ####################################
 
-pathplanner_version=2025.2.2
+pathplanner_version=2026.1.2
 
 if [[ "$FLDK_INSTALL_PATHPLANNER" != 0 ]]; then
 case "$OSTYPE" in
@@ -245,7 +242,7 @@ cp ~/Applications/PathPlanner/data/flutter_assets/images/icon.png ~/.local/share
 
 cat <<EOF >~/.local/share/applications/pathplanner.desktop
 [Desktop Entry]
-Comment=2025 FRC autonomous path generator
+Comment=2026 FRC autonomous path generator
 Exec=pathplanner
 GenericName=PathPlanner
 Icon=pathplanner

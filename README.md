@@ -12,6 +12,8 @@ Additionally, it also installs these useful FRC tools:
 
 ## Usage
 
+Make sure `curl` is installed on your system. This is true on macOS, at least.
+
 To run the script, you must have a display (X11 or Wayland) and a network connection.
 
 ```bash
