@@ -234,6 +234,7 @@ curl "https://github.com/mjansen4857/pathplanner/releases/download/v${pathplanne
 echo "Installing PathPlanner..."
 unzip "PathPlanner-Linux-v${pathplanner_version}.zip"
 
+rm ~/.local/bin/pathplanner
 ln -s ~/Applications/PathPlanner/pathplanner ~/.local/bin/pathplanner
 chmod +x ~/.local/bin/pathplanner
 
