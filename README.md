@@ -1,9 +1,9 @@
-# FRC Linux Development Kit
+# FRC Linux/macOS Development Kit
 
 This script will install all the necessary software to connect to the roboRIO from Linux or macOS. Currently, this includes:
 
 * WPILib
-* WPILib VSCode extension installation in existing IDE
+* WPILib VSCode extension installation in existing IDE (optional)
 * OpenDS (open-source driver station)
 
 Additionally, it also installs these useful FRC tools:
@@ -14,7 +14,7 @@ Additionally, it also installs these useful FRC tools:
 
 Make sure `curl` is installed on your system. This is true on macOS, at least.
 
-To run the script, you must have a display (X11 or Wayland) and a network connection.
+To run the script, you must have a display (X11 or Wayland) and a network connection. The installation will require you to interact with the WPILib installer.
 
 ```bash
 curl -o- -L https://raw.githubusercontent.com/ethanc8/FRCLinuxDevKit/macos/install-online.sh | bash
@@ -36,5 +36,6 @@ curl -o- -L https://raw.githubusercontent.com/ethanc8/FRCLinuxDevKit/macos/insta
 ## Wiring to the roboRIO
 
 1. Connect power to the roboRIO
-2. Plug a Power-Over-Ethernet splitter into the radio's left port, and connect the power cable to power and the other cable to the roboRIO (by plugging in a normal Ethernet cable)
-3. Plug an Ethernet cable into the radio's right port and the other end into your computer (you may need a USB-to-Ethernet adapter if you're doing this from a laptop)
+2. Power the radio
+3. Plug an Ethernet cable into the radio's RIO port and the other end into the Rio
+4. Plug an Ethernet cable into the radio's right port and the other end into your computer (you may need a USB-to-Ethernet adapter if you're doing this from a laptop)
