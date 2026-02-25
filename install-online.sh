@@ -4,7 +4,7 @@ mkdir -p ~/Downloads/FRCLinuxDevKit && cd ~/Downloads/FRCLinuxDevKit || echo "Wa
 
 # uname -m is the architecture of the OS, uname -p is the architecture of the CPU.
 arch=$(uname -m)
-wpilib_version=2026.1.1
+wpilib_version=2026.2.1
 
 ###############################
 ##### WPILib installation #####
